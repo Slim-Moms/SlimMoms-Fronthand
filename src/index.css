@@ -1,0 +1,16 @@
+/* Minimal global styles */
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: #f7f7f7;
+}
+
+/* basic container spacing */
+div {
+  box-sizing: border-box;
+}
