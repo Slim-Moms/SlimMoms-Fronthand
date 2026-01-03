@@ -1,3 +1,4 @@
+// src/components/CalculatorCalorieForm/CalculatorCalorieForm.jsx
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -6,27 +7,31 @@ import styles from './CalculatorCalorieForm.module.css';
 const CalculatorSchema = Yup.object().shape({
   height: Yup.number()
     .required('Height is required')
-    .min(100, 'Height must be at least 100 cm')
-    .max(250, 'Height must be at most 250 cm')
-    .integer('Height must be an integer'),
+    .typeError('Only numeric values are accepted')
+    .min(100, 'Enter your height from 100 cm')
+    .max(250, 'Enter your height up to 250 cm')
+    .integer(),
   
   age: Yup.number()
     .required('Age is required')
-    .min(15, 'Age must be at least 15 years')
-    .max(80, 'Age must be at most 80 years')
-    .integer('Age must be an integer'),
+    .typeError('Only numeric values are accepted')
+    .min(18, 'Enter your age from 18 years')
+    .max(99, 'Enter your age up to 100 years')
+    .integer(),
   
   weight: Yup.number()
     .required('Current weight is required')
-    .min(30, 'Weight must be at least 30 kg')
-    .max(200, 'Weight must be at most 200 kg')
-    .integer('Weight must be an integer'),
+    .typeError('Only numeric values are accepted')
+    .min(20, 'Enter your current weight from 20 kg')
+    .max(500, 'Enter your current weight up to 500 kg')
+    .integer(),
   
   desiredWeight: Yup.number()
     .required('Desired weight is required')
-    .min(30, 'Desired weight must be at least 30 kg')
-    .max(200, 'Desired weight must be at most 200 kg')
-    .integer('Desired weight must be an integer'),
+    .typeError('Only numeric values are accepted')
+    .min(20, 'Enter your desired weight from 20 kg')
+    .max(500, 'Enter your desired weight up to 500 kg')
+    .integer(),
   
   bloodType: Yup.string()
     .required('Blood type is required')
@@ -123,6 +128,7 @@ const CalculatorCalorieForm = ({ onSubmit, initialValues }) => {
                               name="bloodType"
                               value={type}
                               className={styles.radioInput}
+                              checked={values.bloodType === type}
                             />
                             <span className={styles.radioCustom}></span>
                             <span className={styles.radioText}>{type}</span>
@@ -137,7 +143,7 @@ const CalculatorCalorieForm = ({ onSubmit, initialValues }) => {
                 </div>
                 
                 <button type="submit" className={styles.submitButton}>
-                  Calculate
+                  Lose Weight
                 </button>
               </Form>
             )}
