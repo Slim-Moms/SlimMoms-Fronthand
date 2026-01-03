@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { simulateCalculateDailyRate } from '../../api/fakeBackend';
 
 // Canlıya geçince burayı değiştirecem
-
-axios.defaults.baseURL = 'http://localhost:3000/api'; // Backend adresi
+// Backend canlıya geçtiğinde burayı açılacam
+//axios.defaults.baseURL = 'http://localhost:3000/api'; // Backend adresi
 
 export const fetchDailyRate = createAsyncThunk(
   'diet/fetchDailyRate',
@@ -17,9 +18,15 @@ export const fetchDailyRate = createAsyncThunk(
         bloodType: Number(userData.bloodType),
       };
 
-      const response = await axios.post('/user/daily-calory-needs', payload);
-      // Backend yanıtı: { status: 200, message: '...', data: { dailyRate, notAllowedProducts } }
-      return response.data.data;
+// 🔴
+      //const response = await axios.post('/user/daily-calory-needs', payload);
+     /// Backend yanıtı: { status: 200, message: '...', data: { dailyRate, notAllowedProducts } }
+     // return response.data.data;
+     // 🟢
+     const data = await simulateCalculateDailyRate(payload);
+      return data;
+
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
