@@ -1,78 +1,85 @@
+// src/pages/CalculatorPage/CalculatorPage.jsx
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CalculatorCalorieForm from '../../components/CalculatorCalorieForm/CalculatorCalorieForm';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
+import DailyCalorieIntake from '../../components/DailyCalorieIntake';
+import { showLoader, hideLoader } from '../../redux/loader/loaderSlice';
 import styles from './CalculatorPage.module.css';
 
 const CalculatorPage = () => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [calculationResult, setCalculationResult] = useState(null);
+  const isLoading = useSelector((state) => state.loader.isLoading);
+  
+  // KADINLAR İÇİN FORMÜL: 
+  // 10 * ağırlık + 6,25 * boy - 5 * yaş - 161 - 10 * (ağırlık - istenen ağırlık)
+  const calculateDailyCalories = (data) => {
+    const { height, age, weight, desiredWeight, bloodType } = data;
+    
+    let dailyCalories;
+    
+    // Kan grubuna göre farklı formüller (referans projeden)
+    if (bloodType === '1' || bloodType === '3') {
+      // Kan grubu 1 ve 3 için
+      dailyCalories = 10 * weight + 6.25 * height - 5 * age + 5;
+    } else {
+      // Kan grubu 2 ve 4 için (kadınlar için formül)
+      dailyCalories = 10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - desiredWeight);
+    }
+    
+    return {
+      dailyCalories: Math.max(Math.round(dailyCalories), 1200), // Minimum 1200 kalori
+      height,
+      age,
+      weight,
+      desiredWeight,
+      bloodType,
+      weightDifference: weight - desiredWeight,
+    };
+  };
 
   const handleSubmit = async (values) => {
-    setIsLoading(true);
+    dispatch(showLoader());
     
-    // Simulate API call
+    // Simüle edilmiş API çağrısı
     setTimeout(() => {
       const result = calculateDailyCalories(values);
       setCalculationResult(result);
-      setIsLoading(false);
+      dispatch(hideLoader());
       setIsModalOpen(true);
     }, 1500);
   };
 
-  const calculateDailyCalories = (data) => {
-    // Harris-Benedict Formula
-    let bmr;
-    if (data.bloodType === '1' || data.bloodType === '3') {
-      // For blood types 1 and 3 (simplified calculation)
-      bmr = 10 * data.weight + 6.25 * data.height - 5 * data.age + 5;
-    } else {
-      // For blood types 2 and 4
-      bmr = 10 * data.weight + 6.25 * data.height - 5 * data.age - 161;
-    }
-    
-    const dailyCalories = Math.round(bmr * 1.2); // Sedentary activity level
-    const weightDifference = data.weight - data.desiredWeight;
-    
-    return {
-      dailyCalories,
-      weightDifference,
-      bmr: Math.round(bmr),
-      data: { ...data },
-    };
-  };
-
   return (
     <div className={styles.page}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <CalculatorCalorieForm 
-          onSubmit={handleSubmit}
-          initialValues={{
-            height: '',
-            age: '',
-            weight: '',
-            desiredWeight: '',
-            bloodType: '1',
-          }}
-        />
-      )}
+      {isLoading && <Loader />}
+      
+      <CalculatorCalorieForm 
+        onSubmit={handleSubmit}
+        initialValues={{
+          height: '',
+          age: '',
+          weight: '',
+          desiredWeight: '',
+          bloodType: '1',
+        }}
+      />
       
       {isModalOpen && calculationResult && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <div className={styles.modalContent}>
-            <h2 className={styles.modalTitle}>Your Daily Calorie Intake</h2>
+            <h2 className={styles.modalTitle}>
+              Ваша рекомендуемая суточная норма калорий составляет
+            </h2>
             
             <div className={styles.resultCard}>
               <div className={styles.resultValue}>
                 {calculationResult.dailyCalories}
-                <span className={styles.resultUnit}>kcal</span>
+                <span className={styles.resultUnit}>ккал</span>
               </div>
-              <p className={styles.resultDescription}>
-                This is your recommended daily calorie intake to reach your desired weight.
-              </p>
             </div>
             
             <div className={styles.details}>
@@ -80,27 +87,23 @@ const CalculatorPage = () => {
               <ul className={styles.detailsList}>
                 <li className={styles.detailItem}>
                   <span className={styles.detailLabel}>Height:</span>
-                  <span className={styles.detailValue}>{calculationResult.data.height} cm</span>
+                  <span className={styles.detailValue}>{calculationResult.height} cm</span>
                 </li>
                 <li className={styles.detailItem}>
                   <span className={styles.detailLabel}>Age:</span>
-                  <span className={styles.detailValue}>{calculationResult.data.age} years</span>
+                  <span className={styles.detailValue}>{calculationResult.age} years</span>
                 </li>
                 <li className={styles.detailItem}>
                   <span className={styles.detailLabel}>Current Weight:</span>
-                  <span className={styles.detailValue}>{calculationResult.data.weight} kg</span>
+                  <span className={styles.detailValue}>{calculationResult.weight} kg</span>
                 </li>
                 <li className={styles.detailItem}>
                   <span className={styles.detailLabel}>Desired Weight:</span>
-                  <span className={styles.detailValue}>{calculationResult.data.desiredWeight} kg</span>
+                  <span className={styles.detailValue}>{calculationResult.desiredWeight} kg</span>
                 </li>
                 <li className={styles.detailItem}>
                   <span className={styles.detailLabel}>Blood Type:</span>
-                  <span className={styles.detailValue}>{calculationResult.data.bloodType}</span>
-                </li>
-                <li className={styles.detailItem}>
-                  <span className={styles.detailLabel}>BMR (Basal Metabolic Rate):</span>
-                  <span className={styles.detailValue}>{calculationResult.bmr} kcal</span>
+                  <span className={styles.detailValue}>{calculationResult.bloodType}</span>
                 </li>
               </ul>
             </div>
@@ -108,15 +111,9 @@ const CalculatorPage = () => {
             <div className={styles.actions}>
               <button 
                 className={styles.actionButton}
-                onClick={() => window.print()}
-              >
-                Print Results
-              </button>
-              <button 
-                className={styles.actionButtonSecondary}
                 onClick={() => setIsModalOpen(false)}
               >
-                Close
+                Начать худеть
               </button>
             </div>
           </div>

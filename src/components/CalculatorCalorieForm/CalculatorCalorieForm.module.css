@@ -1,3 +1,4 @@
+/* src/components/CalculatorCalorieForm/CalculatorCalorieForm.module.css */
 .calculator {
   min-width: 320px;
   margin: 0 auto;
@@ -19,14 +20,18 @@
 }
 
 .formContainer {
-  width: 100%;
+  width: 240px;
+  margin-right: 0;
 }
 
 .formWrapper {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  margin-bottom: 40px;
+  gap: 0;
+}
+
+.leftColumn, .rightColumn {
+  flex: 1;
 }
 
 .formGroup {
@@ -55,6 +60,7 @@
   background: transparent;
   outline: none;
   transition: border-color 0.3s ease;
+  padding: 10px 0;
 }
 
 .field:focus {
@@ -127,7 +133,7 @@
   display: block;
   width: 176px;
   height: 44px;
-  margin: 0 auto;
+  margin: 40px auto 0;
   background: #FC842D;
   border: 2px solid #FC842D;
   border-radius: 30px;
@@ -140,21 +146,23 @@
   color: #FFFFFF;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
 }
 
 .submitButton:hover {
   background: #FFFFFF;
   color: #FC842D;
-  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
 }
 
-/* Responsive Design */
+/* Responsive Design - Tablet */
 @media screen and (min-width: 768px) {
   .container {
     max-width: 768px;
     padding: 100px 87px 74px;
+    background-image: url('../../img/Group40@1x.png');
     background-repeat: no-repeat;
     background-position: top 60% right 0px;
+    min-height: 944px;
   }
   
   .title {
@@ -169,16 +177,16 @@
     gap: 31px;
   }
   
-  .leftColumn,
-  .rightColumn {
-    flex: 1;
+  .radioGroup {
+    margin-top: 18px;
   }
   
   .submitButton {
-    margin: 0;
+    margin: 60px 0 0;
   }
 }
 
+/* Responsive Design - Desktop */
 @media screen and (min-width: 1280px) {
   .calculator {
     display: flex;
@@ -190,6 +198,7 @@
     max-width: 630px;
     padding: 292px 0 0 0;
     margin: 0;
+    background-image: url('../../img/Group41@1x.png');
     background-position: top 0% right 115px;
   }
   
