@@ -1,45 +1,53 @@
-import React, { useState } from 'react';
-import { Provider } from 'react-redux';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Provider, useSelector } from 'react-redux';
 import { store } from './redux/store';
-import CalculatorPage from './pages/CalculatorPage/CalculatorPage';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import { selectIsLoading } from './redux/loader/loaderSelectors';
 import './App.css';
 
-function App() {
-  // Sayfa geçişlerini kontrol eden state
-  const [activeTab, setActiveTab] = useState('calculator');
+import Header from './components/Header/Header';
+import Loader from './components/Loader/Loader';
+
+
+const CalculatorPage = lazy(() => import('./pages/CalculatorPage/CalculatorPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const RegistrationPage = lazy(() => import('./pages/RegistrationPage/RegistrationPage'));
+
+const AppContent = () => {
+  const isLoading = useSelector(selectIsLoading);
 
   return (
+    <div className="App">
+      <Header />
+      
+      
+      {isLoading && <Loader />}
+      
+      <main className="app-main">
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            
+            <Route path="/" element={<Navigate to="/calculator" replace />} />
+            <Route path="/diary" element={<div>Diary Page Under Construction</div>} />
+            <Route path="/calculator" element={<CalculatorPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />        
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </main>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
     <Provider store={store}>
-      <div className="App">
-        {/* Header Bileşeni - Navigasyon kontrolünü prop olarak geçiyoruz */}
-        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        <main className="app-main">
-          {/* Sadece Calculator Tab'ı aktifse senin sayfanı gösteriyoruz */}
-          {activeTab === 'calculator' && <CalculatorPage />}
-          
-          {/* Diğer tablar için basit placeholderlar */}
-          {activeTab === 'diary' && (
-            <div style={{ textAlign: 'center', padding: '50px', fontSize: '20px', color: '#666' }}>
-              🚧 Diary Page (Diğer arkadaşın görevi)
-            </div>
-          )}
-          
-          {activeTab === 'about' && (
-             <div style={{ textAlign: 'center', padding: '50px', fontSize: '20px', color: '#666' }}>
-              ℹ️ About Page (Diğer arkadaşın görevi)
-            </div>
-          )}
-        </main>
-
-        <Footer />
-        
-        {/* Modal Root index.html içinde olduğu için buraya eklemeye gerek yok */}
-      </div>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </Provider>
   );
-}
+};
 
 export default App;

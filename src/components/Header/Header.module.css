@@ -1,97 +1,102 @@
-.appHeader {
-  background-color: #FFFFFF;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
+.header {
+  width: 100%;
+  background-color: #ffffff;
+
+  position: fixed;
   top: 0;
-  z-index: 1000;
-  padding: 16px 20px;
+  left: 0;
+  z-index: 50;
 }
 
 .headerContainer {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 20px 16px;
+  margin-top: 20px;
+
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  gap: 20px;
 }
 
-.logoSection {
+.logoNavContainer {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
-.logoImage {
-  width: 46px;
-  height: 46px;
+.separator {
+  height: 32px;
+  width: 2px;
+  background-color: #E0E0E0;
+  margin: 0 20px;
 }
 
-.appTitle {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.main {
-  color: #264061;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.sub {
-  color: #FC842D;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.appNav {
-  display: flex;
-  gap: 8px;
-}
-
-.navButton {
+.logo {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 16px;
-  background: transparent;
-  border: 2px solid transparent;
-  border-radius: 30px;
-  color: #9B9FAA;
-  font-family: 'Verdana', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.logoIcon {
+  width: 60px;
+  height: 60px;
+}
+
+.logoText {
+  padding-left: 0;
+  margin-top: 30px;
+  display: flex;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.slim {
+  color: #000000;
+}
+
+.mom {
+  color: #fc842d;
+}
+
+.nav {
+  margin-top: 10px;
+  display: flex;
+  gap: 24px;
+  
+}
+
+.link {
+  text-decoration: none;
+  color: #9b9faa;
+  font-weight: 700;
+}
+
+.active {
+  color: #000000;
+  text-decoration: none;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.userName {
+  font-weight: 700;
+  color: #212121;
+}
+
+.logoutBtn {
+  background: none;
+  border: none;
+  color: #9b9faa;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.navButton:hover {
-  color: #FC842D;
-  background-color: rgba(252, 132, 45, 0.1);
-}
-
-.navButton.active {
-  background-color: #FC842D;
-  color: #FFFFFF;
-  border-color: #FC842D;
-}
-
-/* Mobile Responsive */
-@media (max-width: 767px) {
-  .headerContainer {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .appNav {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .navButton {
-    padding: 8px 12px;
-    font-size: 13px;
-  }
+.logoutBtn:hover {
+  color: #fc842d;
 }
