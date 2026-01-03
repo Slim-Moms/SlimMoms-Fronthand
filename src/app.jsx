@@ -5,9 +5,11 @@ import { store } from './redux/store';
 import { selectIsLoading } from './redux/loader/loaderSelectors';
 import './App.css';
 
-import Header from './components/Header/Header';
-import Loader from './components/Loader/Loader';
 
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer'; 
+import Loader from './components/Loader/Loader';
+import DailyCalorieIntake from './components/DailyCalorieIntake/DailyCalorieIntake.jsx';
 
 const CalculatorPage = lazy(() => import('./pages/CalculatorPage/CalculatorPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
@@ -20,15 +22,13 @@ const AppContent = () => {
     <div className="App">
       <Header />
       
-      
       {isLoading && <Loader />}
       
       <main className="app-main">
         <Suspense fallback={<Loader />}>
           <Routes>
-            
             <Route path="/" element={<Navigate to="/calculator" replace />} />
-            <Route path="/diary" element={<div>Diary Page Under Construction</div>} />
+            <Route path="/diary" element={<DailyCalorieIntake />} />
             <Route path="/calculator" element={<CalculatorPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />        
@@ -36,6 +36,8 @@ const AppContent = () => {
           </Routes>
         </Suspense>
       </main>
+
+      <Footer /> 
     </div>
   );
 };
