@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CalculatorCalorieForm from '../../components/CalculatorCalorieForm/CalculatorCalorieForm';
+import RightSideBar from '../../components/RightSideBar/RightSideBar';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
-import DailyCalorieIntake from '../../components/DailyCalorieIntake';
 import { showLoader, hideLoader } from '../../redux/loader/loaderSlice';
 import { selectIsLoading } from '../../redux/loader/loaderSelectors';
 import styles from './CalculatorPage.module.css';
@@ -15,19 +15,18 @@ const CalculatorPage = () => {
   const [calculationResult, setCalculationResult] = useState(null);
   const isLoading = useSelector(selectIsLoading);
   
-  // CORRECT FORMULA: 10*weight + 6.25*height - 5*age - 161 - 10*(weight - desiredWeight)
+  // DOĞRU FORMÜL: 10*weight + 6.25*height - 5*age - 161 - 10*(weight - desiredWeight)
   const calculateDailyCalories = (data) => {
     const { height, age, weight, desiredWeight, bloodType } = data;
     
-    // According to reference project, different formulas for blood types
     let bmr;
     
+    // Referans projeye göre kan grubuna göre farklı formüller
     if (bloodType === '1' || bloodType === '3') {
-      // For blood types 1 and 3 (men's formula)
+      // Kan grubu 1 ve 3 için
       bmr = 10 * weight + 6.25 * height - 5 * age + 5;
     } else {
-      // For blood types 2 and 4 (women's formula from assignment)
-      // 10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - desiredWeight)
+      // Kan grubu 2 ve 4 için - KADINLAR FORMÜLÜ
       bmr = 10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - desiredWeight);
     }
     
@@ -35,7 +34,7 @@ const CalculatorPage = () => {
     const dailyCalories = Math.round(bmr * 1.2);
     
     return {
-      dailyCalories: Math.max(dailyCalories, 1200), // Minimum 1200 calories
+      dailyCalories: Math.max(dailyCalories, 1200),
       height,
       age,
       weight,
@@ -65,16 +64,24 @@ const CalculatorPage = () => {
     <div className={styles.page}>
       {isLoading && <Loader />}
       
-      <CalculatorCalorieForm 
-        onSubmit={handleSubmit}
-        initialValues={{
-          height: '',
-          age: '',
-          weight: '',
-          desiredWeight: '',
-          bloodType: '1',
-        }}
-      />
+      <div className={styles.pageContainer}>
+        <div className={styles.calculatorSection}>
+          <CalculatorCalorieForm 
+            onSubmit={handleSubmit}
+            initialValues={{
+              height: '',
+              age: '',
+              weight: '',
+              desiredWeight: '',
+              bloodType: '1',
+            }}
+          />
+        </div>
+        
+        <div className={styles.sidebarSection}>
+          <RightSideBar />
+        </div>
+      </div>
       
       {isModalOpen && calculationResult && (
         <Modal onClose={() => setIsModalOpen(false)}>
@@ -117,10 +124,6 @@ const CalculatorPage = () => {
                   <span className={styles.detailValue}>{calculationResult.bloodType}</span>
                 </li>
                 <li className={styles.detailItem}>
-                  <span className={styles.detailLabel}>Formula Used:</span>
-                  <span className={styles.detailValue}>{calculationResult.formulaUsed}</span>
-                </li>
-                <li className={styles.detailItem}>
                   <span className={styles.detailLabel}>Weight to Lose:</span>
                   <span className={styles.detailValue}>{calculationResult.weightDifference} kg</span>
                 </li>
@@ -138,12 +141,9 @@ const CalculatorPage = () => {
               <button 
                 type="button"
                 className={styles.actionButtonSecondary}
-                onClick={() => {
-                  setIsModalOpen(false);
-                  // Here you could add logic to reset the form
-                }}
+                onClick={() => setIsModalOpen(false)}
               >
-                Calculate Again
+                Close
               </button>
             </div>
           </div>
