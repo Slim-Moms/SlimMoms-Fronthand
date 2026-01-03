@@ -5,6 +5,8 @@ import { simulateCalculateDailyRate } from '../../api/fakeBackend';
 // Canlıya geçince burayı değiştirecem
 // Backend canlıya geçtiğinde burayı açılacam
 //axios.defaults.baseURL = 'http://localhost:3000/api'; // Backend adresi
+//CANLI Backend adresi
+//axios.defaults.baseURL = 'https://slimmoms-backend-9zqy.onrender.com';
 
 export const fetchDailyRate = createAsyncThunk(
   'diet/fetchDailyRate',
