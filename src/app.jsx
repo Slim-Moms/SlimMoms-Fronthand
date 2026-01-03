@@ -11,6 +11,8 @@ const [isModalOpen, setIsModalOpen] = React.useState(false);
         Modalı Aç
       </button>
 
+
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
