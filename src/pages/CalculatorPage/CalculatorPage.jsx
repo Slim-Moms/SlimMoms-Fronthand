@@ -1,4 +1,4 @@
-// src/pages/CalculatorPage/CalculatorPage.jsx
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CalculatorCalorieForm from '../../components/CalculatorCalorieForm/CalculatorCalorieForm';
@@ -6,51 +6,59 @@ import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
 import DailyCalorieIntake from '../../components/DailyCalorieIntake';
 import { showLoader, hideLoader } from '../../redux/loader/loaderSlice';
+import { selectIsLoading } from '../../redux/loader/loaderSelectors';
 import styles from './CalculatorPage.module.css';
 
 const CalculatorPage = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [calculationResult, setCalculationResult] = useState(null);
-  const isLoading = useSelector((state) => state.loader.isLoading);
+  const isLoading = useSelector(selectIsLoading);
   
-  // KADINLAR İÇİN FORMÜL: 
-  // 10 * ağırlık + 6,25 * boy - 5 * yaş - 161 - 10 * (ağırlık - istenen ağırlık)
+  // CORRECT FORMULA: 10*weight + 6.25*height - 5*age - 161 - 10*(weight - desiredWeight)
   const calculateDailyCalories = (data) => {
     const { height, age, weight, desiredWeight, bloodType } = data;
     
-    let dailyCalories;
+    // According to reference project, different formulas for blood types
+    let bmr;
     
-    // Kan grubuna göre farklı formüller (referans projeden)
     if (bloodType === '1' || bloodType === '3') {
-      // Kan grubu 1 ve 3 için
-      dailyCalories = 10 * weight + 6.25 * height - 5 * age + 5;
+      // For blood types 1 and 3 (men's formula)
+      bmr = 10 * weight + 6.25 * height - 5 * age + 5;
     } else {
-      // Kan grubu 2 ve 4 için (kadınlar için formül)
-      dailyCalories = 10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - desiredWeight);
+      // For blood types 2 and 4 (women's formula from assignment)
+      // 10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - desiredWeight)
+      bmr = 10 * weight + 6.25 * height - 5 * age - 161 - 10 * (weight - desiredWeight);
     }
     
+    // Activity factor (sedentary)
+    const dailyCalories = Math.round(bmr * 1.2);
+    
     return {
-      dailyCalories: Math.max(Math.round(dailyCalories), 1200), // Minimum 1200 kalori
+      dailyCalories: Math.max(dailyCalories, 1200), // Minimum 1200 calories
       height,
       age,
       weight,
       desiredWeight,
       bloodType,
       weightDifference: weight - desiredWeight,
+      bmr: Math.round(bmr),
+      formulaUsed: bloodType === '1' || bloodType === '3' 
+        ? '10 × weight + 6.25 × height - 5 × age + 5' 
+        : '10 × weight + 6.25 × height - 5 × age - 161 - 10 × (weight - desiredWeight)'
     };
   };
 
   const handleSubmit = async (values) => {
     dispatch(showLoader());
     
-    // Simüle edilmiş API çağrısı
+    // Simulate API call
     setTimeout(() => {
       const result = calculateDailyCalories(values);
       setCalculationResult(result);
       dispatch(hideLoader());
       setIsModalOpen(true);
-    }, 1500);
+    }, 1000);
   };
 
   return (
@@ -72,14 +80,17 @@ const CalculatorPage = () => {
         <Modal onClose={() => setIsModalOpen(false)}>
           <div className={styles.modalContent}>
             <h2 className={styles.modalTitle}>
-              Ваша рекомендуемая суточная норма калорий составляет
+              Your Recommended Daily Calorie Intake
             </h2>
             
             <div className={styles.resultCard}>
               <div className={styles.resultValue}>
                 {calculationResult.dailyCalories}
-                <span className={styles.resultUnit}>ккал</span>
+                <span className={styles.resultUnit}>kcal</span>
               </div>
+              <p className={styles.resultDescription}>
+                This is calculated based on your inputs and blood type {calculationResult.bloodType}
+              </p>
             </div>
             
             <div className={styles.details}>
@@ -105,15 +116,34 @@ const CalculatorPage = () => {
                   <span className={styles.detailLabel}>Blood Type:</span>
                   <span className={styles.detailValue}>{calculationResult.bloodType}</span>
                 </li>
+                <li className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Formula Used:</span>
+                  <span className={styles.detailValue}>{calculationResult.formulaUsed}</span>
+                </li>
+                <li className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Weight to Lose:</span>
+                  <span className={styles.detailValue}>{calculationResult.weightDifference} kg</span>
+                </li>
               </ul>
             </div>
             
             <div className={styles.actions}>
               <button 
+                type="button"
                 className={styles.actionButton}
                 onClick={() => setIsModalOpen(false)}
               >
-                Начать худеть
+                Start Losing Weight
+              </button>
+              <button 
+                type="button"
+                className={styles.actionButtonSecondary}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  // Here you could add logic to reset the form
+                }}
+              >
+                Calculate Again
               </button>
             </div>
           </div>
