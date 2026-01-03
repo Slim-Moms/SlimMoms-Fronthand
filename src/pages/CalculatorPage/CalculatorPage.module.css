@@ -1,8 +1,27 @@
+
 .page {
   min-height: 100vh;
   background-color: #FFFFFF;
+  padding: 20px;
 }
 
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.calculatorSection {
+  flex: 1;
+}
+
+.sidebarSection {
+  flex: 0 0 auto;
+}
+
+/* Modal Styles */
 .modalContent {
   padding: 20px;
 }
@@ -38,6 +57,7 @@
 .resultUnit {
   font-size: 16px;
   margin-left: 5px;
+  color: #264061;
 }
 
 .resultDescription {
@@ -73,6 +93,7 @@
 .detailItem {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid #E0E0E0;
 }
@@ -97,6 +118,7 @@
   line-height: 1.21;
   letter-spacing: 0.04em;
   color: #212121;
+  text-align: right;
 }
 
 .actions {
@@ -147,31 +169,15 @@
 .actionButtonSecondary:hover {
   background: #FC842D;
   color: #FFFFFF;
+  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
 }
 
 /* Responsive Design */
-@media screen and (max-width: 768px) {
-  .modalTitle {
-    font-size: 22px;
+@media (max-width: 767px) {
+  .page {
+    padding: 10px;
   }
   
-  .resultValue {
-    font-size: 36px;
-  }
-  
-  .actions {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .actionButton,
-  .actionButtonSecondary {
-    width: 100%;
-    max-width: 250px;
-  }
-}
-
-@media screen and (max-width: 480px) {
   .modalContent {
     padding: 15px;
   }
@@ -183,14 +189,80 @@
   
   .resultCard {
     padding: 20px;
+    margin-bottom: 20px;
   }
   
   .resultValue {
-    font-size: 28px;
+    font-size: 32px;
   }
   
   .detailItem {
     flex-direction: column;
+    align-items: flex-start;
     gap: 5px;
+    padding: 8px 0;
+  }
+  
+  .detailValue {
+    text-align: left;
+  }
+  
+  .actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .actionButton,
+  .actionButtonSecondary {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .pageContainer {
+    flex-direction: row;
+  }
+  
+  .calculatorSection {
+    flex: 2;
+  }
+  
+  .sidebarSection {
+    flex: 1;
+    max-width: 350px;
+  }
+  
+  .modalTitle {
+    font-size: 22px;
+  }
+  
+  .resultValue {
+    font-size: 36px;
+  }
+  
+  .actions {
+    gap: 15px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pageContainer {
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+  .calculatorSection {
+    flex: 3;
+  }
+  
+  .sidebarSection {
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  .page {
+    padding: 40px;
   }
 }
