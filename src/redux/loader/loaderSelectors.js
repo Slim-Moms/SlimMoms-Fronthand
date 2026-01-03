@@ -1,2 +1,1 @@
-// src/redux/loader/loaderSelectors.js
-export const isLoadingSelector = (state) => state.loader.isLoading;
+export const selectIsLoading = (state) => state.loader.isLoading;
