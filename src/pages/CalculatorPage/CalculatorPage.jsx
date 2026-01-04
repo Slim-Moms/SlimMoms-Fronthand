@@ -49,43 +49,12 @@ const CalculatorPage = () => {
         </div>
       </div>
       
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <div className={styles.modalContent}>
-            <h2 className={styles.modalTitle}>
-              Your Recommended Daily Calorie Intake
-            </h2>
-            
-            <div className={styles.resultCard}>
-              <div className={styles.resultValue}>
-                {Math.round(dailyRate)}
-                <span className={styles.resultUnit}>kcal</span>
-              </div>
-              
-              <div className={styles.details}>
-                <h3 className={styles.detailsTitle}>Foods you should not eat</h3>
-                <ol className={styles.detailsList}>
-                  {notAllowedProducts.slice(0, 5).map((product, index) => (
-                    <li key={index} className={styles.detailItem}>
-                       {index + 1}. {product}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-            
-            <div className={styles.actions}>
-              <button 
-                type="button"
-                className={styles.actionButton}
-                onClick={() => setIsModalOpen(false)}
-              >
-                Start Losing Weight
-              </button>
-            </div>
-          </div>
-        </Modal>
-      )}
+    {isModalOpen && (
+  <Modal onClose={() => setIsModalOpen(false)}>
+    {/* Elle yazdığın HTML'leri sildik, bileşeni koyduk */}
+    <DailyCalorieIntake onClose={() => setIsModalOpen(false)} />
+  </Modal>
+)}
     </div>
   );
 };
