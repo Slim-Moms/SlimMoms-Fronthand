@@ -1,8 +1,9 @@
 
 .page {
   min-height: 100vh;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 20px;
+  position: relative;
 }
 
 .pageContainer {
