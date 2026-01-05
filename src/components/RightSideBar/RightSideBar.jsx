@@ -4,68 +4,54 @@ import { selectDailyRate, selectNotAllowedProducts } from '../../redux/diet/diet
 import styles from './RightSideBar.module.css';
 
 const RightSideBar = () => {
-  // Redux'tan verileri al
   const dailyRate = useSelector(selectDailyRate);
   const notAllowedProducts = useSelector(selectNotAllowedProducts);
   
-  // Henüz giriş yapılmadıysa veya hesaplama yoksa varsayılan değerler
-  const caloriesLeft = dailyRate || 0;
-  const caloriesConsumed = 0; // İleride ürün eklendikçe değişecek
-  const percentage = dailyRate ? Math.round((caloriesConsumed / dailyRate) * 100) : 0;
+  // HATA ÇÖZÜMÜ: Tarihi Türkçe formatında alıyoruz
+  const date = new Date().toLocaleDateString('tr-TR'); 
 
-  // Veri yoksa gösterme (veya boş bir state göster)
-  if (!dailyRate) {
-    return (
-      <div className={styles.rightSideBar}>
-        <p className={styles.placeholderText}>
-          Calculate your calories to see your summary here.
-        </p>
-      </div>
-    );
-  }
+  // Hesaplama mantığı (Şimdilik tüketilen 0 varsayıyoruz)
+  const consumed = 0;
+  const left = dailyRate ? Math.round(dailyRate) - consumed : 0;
+  const percentage = dailyRate ? Math.round((consumed / dailyRate) * 100) : 0;
 
   return (
-    <div className={styles.rightSideBar}>
+    <div className={styles.container}>
+      {/* Özet Alanı */}
       <div className={styles.summarySection}>
-        <h2 className={styles.sectionTitle}>Daily Summary</h2>
-        
-        <div className={styles.statsGrid}>
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>Calories Left</span>
-            <span className={styles.statValue}>{Math.round(caloriesLeft)} kcal</span>
-          </div>
-          
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>Calories Consumed</span>
-            <span className={styles.statValue}>{caloriesConsumed} kcal</span>
-          </div>
-          
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>Daily Rate</span>
-            <span className={styles.statValue}>{Math.round(dailyRate)} kcal</span>
-          </div>
-          
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>% of Daily Norm</span>
-            <span className={styles.statValue}>{percentage}%</span>
-          </div>
-        </div>
+        <h2 className={styles.header}>Summary for {date}</h2>
+        <ul className={styles.statList}>
+          <li className={styles.statItem}>
+            <span className={styles.statText}>Left</span>
+            <span className={styles.statValue}>{left} kcal</span>
+          </li>
+          <li className={styles.statItem}>
+            <span className={styles.statText}>Consumed</span>
+            <span className={styles.statValue}>{consumed} kcal</span>
+          </li>
+          <li className={styles.statItem}>
+            <span className={styles.statText}>Daily Rate</span>
+            <span className={styles.statValue}>{dailyRate ? Math.round(dailyRate) : 0} kcal</span>
+          </li>
+          <li className={styles.statItem}>
+            <span className={styles.statText}>n% of normal</span>
+            <span className={styles.statValue}>{percentage} %</span>
+          </li>
+        </ul>
       </div>
 
-      <div className={styles.foodsSection}>
-        <h2 className={styles.sectionTitle}>Foods Not Recommended</h2>
-        <div className={styles.foodsList}>
-          {notAllowedProducts.length > 0 ? (
-            notAllowedProducts.map((food, index) => (
-              <div key={index} className={styles.foodItem}>
-                <span className={styles.foodBullet}>•</span>
-                <span className={styles.foodName}>{food}</span>
-              </div>
-            ))
-          ) : (
-            <p className={styles.foodsNote}>Your diet is very flexible!</p>
-          )}
-        </div>
+      {/* Yasaklı Yiyecekler Alanı */}
+      <div className={styles.foodSection}>
+        <h2 className={styles.header}>Food not recommended</h2>
+        {notAllowedProducts && notAllowedProducts.length > 0 ? (
+           <ul className={styles.productList}>
+             {notAllowedProducts.map((prod, index) => (
+               <li key={index}>{prod}</li>
+             ))}
+           </ul>
+        ) : (
+          <p className={styles.emptyText}>Your diet will be displayed here</p>
+        )}
       </div>
     </div>
   );

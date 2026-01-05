@@ -1,5 +1,13 @@
 // Bu dosya Backend hazır olana kadar Frontend'in çalışmasını sağlar.
 
+
+//CANLI Backend adresi----->>>>>>
+//const BACKEND_URL = 'https://slimmoms-backend-9zqy.onrender.com';
+//LOCAL Backend adresi
+
+
+const BACKEND_URL = 'http://localhost:3000/api';
+
 export const simulateCalculateDailyRate = (userData) => {
   return new Promise((resolve) => {
     // 1. Loader'ı görebilmek için 1.5 saniye gecikme ekliyoruz Sanki internete gidip geliyor gibi
