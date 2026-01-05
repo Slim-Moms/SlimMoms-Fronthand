@@ -1,4 +1,4 @@
-/* .daily-calorie-intake {
+.daily-calorie-intake {
   text-align: center;
   padding: 20px;
   background: #ffffff;
@@ -48,7 +48,7 @@
   color: #333;
 }
 
-Mobil düzen
+/* Mobil düzen */
 @media (max-width: 480px) {
   .daily-calorie-intake {
     padding: 16px;
@@ -75,7 +75,7 @@ Mobil düzen
   }
 }
 
-Tablet düzen
+/* Tablet düzen */
 @media (min-width: 481px) and (max-width: 1024px) {
   .daily-calorie-intake {
     width: 704px;
@@ -93,7 +93,7 @@ Tablet düzen
   }
 }
 
-Masaüstü düzen
+/* Masaüstü düzen */
 @media (min-width: 1025px) {
   .daily-calorie-intake {
     width: 608px;
@@ -109,4 +109,4 @@ Masaüstü düzen
   .calories {
     font-size: 22px;
   }
-} */
+}

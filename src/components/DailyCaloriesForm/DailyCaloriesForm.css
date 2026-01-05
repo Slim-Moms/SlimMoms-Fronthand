@@ -1,4 +1,4 @@
-/* .daily-calories-form {
+.daily-calories-form {
   background: #fff;
   border: 1px solid #E0E0E0;
   border-radius: 8px;
@@ -7,7 +7,7 @@
   margin: 0 auto;
 }
 
-Başlık
+/* Başlık */
 .daily-calories-form h2 {
   font-size: 20px;
   font-weight: 700;
@@ -68,7 +68,7 @@ Buton
   cursor: pointer;
 }
 
-Modal
+/* Modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -85,7 +85,7 @@ Modal
   width: 400px;
 }
 
-Responsive
+/* Responsive */
 @media (max-width: 480px) {
   .daily-calories-form {
     width: 240px;
@@ -110,4 +110,4 @@ Responsive
     height: 343px;
     margin-top: 293px;
   }
-} */
+}
