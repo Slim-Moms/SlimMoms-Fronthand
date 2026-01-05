@@ -1,0 +1,49 @@
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.container {
+  padding: 0 20px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1280px;
+  z-index: 1;
+}
+
+/* Arka Plan Dekorasyonları (Slim Mom Stili) */
+@media screen and (min-width: 768px) {
+  .pageWrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../assets/images/authRegister.png'); /* Görsel yolunu kontrol et */
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .pageWrapper::after {
+    background-image: url('../../assets/images/authRegister.png');
+    background-position: right top;
+  }
+  
+  .container {
+    padding: 0 16px;
+    padding-top: 160px; /* Üstten boşluk */
+  }
+}

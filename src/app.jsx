@@ -1,62 +1,55 @@
-import React, { useState } from "react";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
-import CalculatorPage from "./pages/CalculatorPage/CalculatorPage";
-import DailyCalorieIntake from "./components/DailyCalorieIntake/DailyCalorieIntake.jsx";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import "./App.css";
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Provider, useSelector } from 'react-redux';
+import { store } from './redux/store';
+import { selectIsLoading } from './redux/loader/loaderSelectors';
+import './App.css';
 
-function App() {
-  const [activeTab, setActiveTab] = useState("calculator");
+
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer'; 
+import Loader from './components/Loader/Loader';
+import DailyCalorieIntake from './components/DailyCalorieIntake/DailyCalorieIntake.jsx';
+
+const CalculatorPage = lazy(() => import('./pages/CalculatorPage/CalculatorPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const RegistrationPage = lazy(() => import('./pages/RegistrationPage/RegistrationPage'));
+
+const AppContent = () => {
+  const isLoading = useSelector(selectIsLoading);
 
   return (
+    <div className="App">
+      <Header />
+      
+      {isLoading && <Loader />}
+      
+      <main className="app-main">
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/calculator" replace />} />
+            <Route path="/diary" element={<DailyCalorieIntake />} />
+            <Route path="/calculator" element={<CalculatorPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />        
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </main>
+
+      <Footer /> 
+    </div>
+  );
+};
+
+const App = () => {
+  return (
     <Provider store={store}>
-      <div className="App">
-        <Header activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        <main className="app-main">
-          {/* SADECE HESAPLAYICI SAYFASI */}
-          {activeTab === "calculator" && (
-            <div className="calculator-container">
-              {/* CalculatorPage içinde zaten form ve sonuçlar olduğu için buraya başka bir şey ekleme */}
-              <CalculatorPage />
-            </div>
-          )}
-
-          {/* GÜNLÜK (DAILY) SAYFASI */}
-          {activeTab === "diary" && (
-            <div className="diary-container">
-              {/* Bu sayfada sadece sonuç özetini gösteriyoruz */}
-              <DailyCalorieIntake />
-              <div
-                style={{
-                  textAlign: "center",
-                  marginTop: "30px",
-                  color: "#999",
-                }}
-              >
-                <p>📅 Food diary list will be here soon.</p>
-              </div>
-            </div>
-          )}
-
-          {/* HAKKINDA SAYFASI */}
-          {activeTab === "about" && (
-            <div
-              className="placeholder-section"
-              style={{ textAlign: "center", padding: "100px" }}
-            >
-              <h2>About SlimMom</h2>
-              <p>Healthy living starts with right calculations.</p>
-            </div>
-          )}
-        </main>
-
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </Provider>
   );
-}
+};
 
 export default App;
