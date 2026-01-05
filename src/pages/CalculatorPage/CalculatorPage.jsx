@@ -7,6 +7,7 @@ import Loader from '../../components/Loader/Loader';
 import { fetchDailyRate } from '../../redux/diet/dietOperations';
 import { selectIsLoading, selectDailyRate, selectNotAllowedProducts } from '../../redux/diet/dietSelectors';
 import styles from './CalculatorPage.module.css';
+import DailyCalorieIntake from '../../components/DailyCalorieIntake/DailyCalorieIntake';
 
 const CalculatorPage = () => {
   const dispatch = useDispatch();
