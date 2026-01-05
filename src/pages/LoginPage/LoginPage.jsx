@@ -1,11 +1,25 @@
-import React from 'react';
-import LoginForm from '../../components/LoginForm/LoginForm';
-import s from './LoginPage.module.css';
+// src/pages/LoginPage/LoginPage.jsx
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../redux/auth/operations";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import LoginForm from "../../components/LoginForm/LoginForm";
+import s from "./LoginPage.module.css";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/calculator");
+    }
+  }, [isLoggedIn, navigate]);
+
   const handleLogin = (values) => {
-    console.log('Giriş verileri:', values);
-    // Buraya login API isteği (Redux dispatch vb.) gelecek
+    dispatch(login(values));
   };
 
   return (

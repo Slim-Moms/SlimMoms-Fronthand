@@ -1,11 +1,29 @@
-import React from 'react';
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
-import s from './RegistrationPage.module.css';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { register } from "../../redux/auth/operations";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import s from "./RegistrationPage.module.css";
 
 const RegistrationPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/calculator");
+    }
+  }, [isLoggedIn, navigate]);
+
   const handleRegister = (values) => {
-    console.log('Kayıt verileri:', values);
-    // Buraya backend API isteği gelecek
+    const payload = {
+      name: values.username || values.name,
+      email: values.email,
+      password: values.password,
+    };
+    dispatch(register(payload));
   };
 
   return (
@@ -13,7 +31,6 @@ const RegistrationPage = () => {
       <div className={s.container}>
         <RegistrationForm onSubmit={handleRegister} />
       </div>
-      {/* İsteğe bağlı: Arka plan dekoratif görselleri buraya eklenebilir */}
     </main>
   );
 };
