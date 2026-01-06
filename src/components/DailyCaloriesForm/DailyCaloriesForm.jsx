@@ -21,11 +21,11 @@ export default function DailyCaloriesForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formData); // Yönerge: Doğrulama işlemi
+    const validationErrors = validateForm(formData);
 
     if (Object.keys(validationErrors).length === 0) {
       setErrors({});
-      setShowModal(true); // Yönerge: Modal açılmasını tetikle
+      setShowModal(true);
     } else {
       setErrors(validationErrors);
     }
@@ -34,13 +34,13 @@ export default function DailyCaloriesForm() {
   return (
     <div className="calories-form-container">
       <form onSubmit={handleSubmit}>
-        {/* Form Inputları buraya gelecek (Height, Age vb.) */}
+        {/* Form inputs will go here (Height, Age, etc.) */}
         <button type="submit" className="orange-btn">
           Start losing weight
         </button>
       </form>
 
-      {/* Yönerge: İçerisinde DailyCalorieIntake olan Modal */}
+      {/* Modal containing DailyCalorieIntake */}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <DailyCalorieIntake data={formData} />

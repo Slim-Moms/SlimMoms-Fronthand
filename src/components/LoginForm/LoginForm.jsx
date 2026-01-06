@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import s from './LoginForm.module.css'; // Stil dosyası varsayımıyla
+import s from './LoginForm.module.css';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required field'),

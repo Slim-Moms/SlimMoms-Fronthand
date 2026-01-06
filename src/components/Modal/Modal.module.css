@@ -17,7 +17,7 @@
   background-color: white;
   width: 100%;
   max-width: 320px;
-  /* Mobil için full ekran gibi davranması isteniyorsa height ayarlanabilir */
+  /* Height can be adjusted if full screen behavior is desired for mobile */
   padding: 40px 20px;
   box-shadow: 0px 22px 40px rgba(0, 0, 0, 0.1);
 }
@@ -36,7 +36,7 @@
 /* Tablet */
 @media screen and (min-width: 768px) {
   .modalContainer {
-    max-width: 594px; /* Referanstaki değer */
+    max-width: 594px;
     padding: 64px;
   }
 }
@@ -44,6 +44,6 @@
 /* Desktop */
 @media screen and (min-width: 1280px) {
   .modalContainer {
-    max-width: 690px; /* Referanstaki değer */
+    max-width: 690px;
   }
 }

@@ -15,7 +15,7 @@
   z-index: 1;
 }
 
-/* Arka Plan Dekorasyonları (Slim Mom Stili) */
+/* Background Decorations (Slim Mom Style) */
 @media screen and (min-width: 768px) {
   .pageWrapper::after {
     content: '';
@@ -24,7 +24,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../../assets/images/authRegister.png'); /* Görsel yolunu kontrol et */
+    background-image: url('../../assets/images/authRegister.png');
     background-repeat: no-repeat;
     background-position: bottom right;
     z-index: 0;
@@ -44,6 +44,6 @@
   
   .container {
     padding: 0 16px;
-    padding-top: 160px; /* Üstten boşluk */
+    padding-top: 160px;
   }
 }

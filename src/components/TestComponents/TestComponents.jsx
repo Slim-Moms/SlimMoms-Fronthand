@@ -120,7 +120,7 @@ export const TestComponents = () => {
   );
 };
 
-// Test bileşeni için CSS
+// CSS for test component
 const testCSS = `
 .test-components {
   padding: 20px;

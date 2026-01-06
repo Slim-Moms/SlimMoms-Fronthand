@@ -4,11 +4,11 @@ import * as Yup from 'yup';
 import styles from './CalculatorCalorieForm.module.css';
 
 const validationSchema = Yup.object().shape({
-  height: Yup.number().min(100).max(250).required('Zorunlu'),
-  age: Yup.number().min(18).max(100).required('Zorunlu'),
-  weight: Yup.number().min(20).max(500).required('Zorunlu'),
-  desiredWeight: Yup.number().min(20).max(500).required('Zorunlu'),
-  bloodType: Yup.string().required('Seçiniz'),
+  height: Yup.number().min(100).max(250).required('Required'),
+  age: Yup.number().min(18).max(100).required('Required'),
+  weight: Yup.number().min(20).max(500).required('Required'),
+  desiredWeight: Yup.number().min(20).max(500).required('Required'),
+  bloodType: Yup.string().required('Please select'),
 });
 
 const CalculatorCalorieForm = ({ onSubmit, initialValues, hideTitle }) => {
@@ -26,7 +26,7 @@ const CalculatorCalorieForm = ({ onSubmit, initialValues, hideTitle }) => {
             <Form className={styles.formContainer}>
               <div className={styles.formWrapper}>
                 
-                {/* Sol Kolon */}
+                {/* Left Column */}
                 <div className={styles.inputColumn}>
                   <div className={styles.formInput}>
                     <Field name="height" placeholder="Height *" className={styles.field} />
@@ -42,7 +42,7 @@ const CalculatorCalorieForm = ({ onSubmit, initialValues, hideTitle }) => {
                   </div>
                 </div>
 
-                {/* Sağ Kolon */}
+                {/* Right Column */}
                 <div className={styles.inputColumn}>
                   <div className={styles.formInput}>
                     <Field name="desiredWeight" placeholder="Desired weight *" className={styles.field} />

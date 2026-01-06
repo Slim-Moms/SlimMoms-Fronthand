@@ -9,7 +9,7 @@ const Modal = ({ onClose, children }) => {
       if (e.code === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleEscape);
-    document.body.style.overflow = 'hidden'; // Scroll kilit
+    document.body.style.overflow = 'hidden'; // Lock scroll
     
     return () => {
       window.removeEventListener('keydown', handleEscape);
@@ -25,7 +25,7 @@ const Modal = ({ onClose, children }) => {
     <div className={styles.overlay} onClick={handleBackdropClick}>
       <div className={styles.modalContainer}>
         <button type="button" className={styles.closeBtn} onClick={onClose}>
-            {/* SVG ikon kullanılabilir veya basit X */}
+            {/* SVG icon can be used or simple X */}
             &#10005; 
         </button>
         {children}

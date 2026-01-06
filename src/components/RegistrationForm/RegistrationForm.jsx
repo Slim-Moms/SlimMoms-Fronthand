@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import s from './RegistrationForm.module.css'; // Stil dosyası varsayımıyla
+import s from './RegistrationForm.module.css';
 
 const RegistrationSchema = Yup.object().shape({
   name: Yup.string().min(3, 'At least 3 characters!').required('Required field'),
