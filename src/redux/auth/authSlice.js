@@ -11,23 +11,27 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.user = {
+        name: action.payload.name || "",
+        email: action.payload.email || "",
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         const payload = action.payload;
-        const userData = payload.user || payload;
-        const email = userData.email || "";
-        const nameFromEmail = email.split("@")[0];
-        state.user = {
-          name: userData.name || userData.username || nameFromEmail || "User",
-          email: email,
-        };
         state.token = payload.token || payload.accessToken || null;
         state.isLoggedIn = !!state.token;
       })
       .addCase(register.fulfilled, (state, action) => {
         const payload = action.payload;
-        state.user = payload.user || payload;
+        state.user = {
+          name: payload.user?.name || payload.name || "",
+          email: payload.user?.email || payload.email || "",
+        };
         state.token = payload.token || payload.accessToken || null;
         state.isLoggedIn = !!state.token;
       })
@@ -40,7 +44,17 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload.user || action.payload;
+        const payload = action.payload;
+        const userData = payload?.user || payload;
+        const name = userData?.name || userData?.username || "";
+        const email = userData?.email || "";
+        
+        if (name) {
+          state.user = {
+            name: name,
+            email: email,
+          };
+        }
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
@@ -50,4 +64,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { setUser } = authSlice.actions;
 export const authReducer = authSlice.reducer;

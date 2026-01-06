@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import s from './RegistrationForm.module.css'; // Stil dosyası varsayımıyla
 
 const RegistrationSchema = Yup.object().shape({
-  name: Yup.string().min(3, 'En az 3 karakter!').required('Zorunlu alan'),
-  email: Yup.string().email('Geçersiz e-posta').required('Zorunlu alan'),
-  password: Yup.string().min(8, 'En az 8 karakter!').required('Zorunlu alan'),
+  name: Yup.string().min(3, 'At least 3 characters!').required('Required field'),
+  email: Yup.string().email('Invalid email').required('Required field'),
+  password: Yup.string().min(8, 'At least 8 characters!').required('Required field'),
 });
 
 const RegistrationForm = ({ onSubmit }) => {
   return (
     <div className={s.formContainer}>
-      <h2 className={s.title}>KAYIT OL</h2>
+      <h2 className={s.title}>REGISTER</h2>
       <Formik
         initialValues={{ name: '', email: '', password: '' }}
         validationSchema={RegistrationSchema}
@@ -22,26 +22,26 @@ const RegistrationForm = ({ onSubmit }) => {
         {({ isSubmitting }) => (
           <Form className={s.form}>
             <div className={s.inputWrapper}>
-              <Field type="text" name="name" placeholder="İsim *" className={s.input} />
+              <Field type="text" name="name" placeholder="Name *" className={s.input} />
               <ErrorMessage name="name" component="div" className={s.error} />
             </div>
 
             <div className={s.inputWrapper}>
-              <Field type="email" name="email" placeholder="E-posta *" className={s.input} />
+              <Field type="email" name="email" placeholder="Email *" className={s.input} />
               <ErrorMessage name="email" component="div" className={s.error} />
             </div>
 
             <div className={s.inputWrapper}>
-              <Field type="password" name="password" placeholder="Şifre *" className={s.input} />
+              <Field type="password" name="password" placeholder="Password *" className={s.input} />
               <ErrorMessage name="password" component="div" className={s.error} />
             </div>
 
             <div className={s.buttonGroup}>
               <button type="submit" disabled={isSubmitting} className={s.mainBtn}>
-                Kayıt Ol
+                Register
               </button>
               <Link to="/login" className={s.secondaryBtn}>
-                Giriş Yap
+                Login
               </Link>
             </div>
           </Form>

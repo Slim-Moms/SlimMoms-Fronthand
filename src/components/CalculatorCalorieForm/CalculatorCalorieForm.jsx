@@ -11,11 +11,11 @@ const validationSchema = Yup.object().shape({
   bloodType: Yup.string().required('Seçiniz'),
 });
 
-const CalculatorCalorieForm = ({ onSubmit, initialValues }) => {
+const CalculatorCalorieForm = ({ onSubmit, initialValues, hideTitle }) => {
   return (
     <div className={styles.calculator}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Calculate your daily calorie intake right now</h1>
+        {!hideTitle && <h1 className={styles.title}>Calculate your daily calorie intake right now</h1>}
         
         <Formik
           initialValues={initialValues || { height: '', age: '', weight: '', desiredWeight: '', bloodType: '1' }}

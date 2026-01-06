@@ -21,38 +21,38 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <Header />
-        
-        {isLoading && <Loader />}
-        
-        <main className="app-main">
-          <Suspense fallback={<Loader />}>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route 
-                path="/diary" 
+    <div className="App">
+      <Header />
+      
+      {isLoading && <Loader />}
+      
+      <main className="app-main">
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route 
+              path="/diary" 
                 element={<PrivateRoute redirectTo="/login" component={<DiaryPage />} />} 
-              />
-              <Route 
-                path="/calculator" 
-                element={<PrivateRoute redirectTo="/login" component={<CalculatorPage />} />} 
-              />
-              <Route 
-                path="/login" 
-                element={<RestrictedRoute redirectTo="/diary" component={<LoginPage />} />} 
-              />
-              <Route 
-                path="/registration" 
-                element={<RestrictedRoute redirectTo="/diary" component={<RegistrationPage />} />} 
-              />        
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </main>
+            />
+            <Route 
+              path="/calculator" 
+              element={<PrivateRoute redirectTo="/login" component={<CalculatorPage />} />} 
+            />
+            <Route 
+              path="/login" 
+              element={<RestrictedRoute redirectTo="/diary" component={<LoginPage />} />} 
+            />
+            <Route 
+              path="/registration" 
+              element={<RestrictedRoute redirectTo="/diary" component={<RegistrationPage />} />} 
+            />        
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </main>
 
-      </div>
-    </BrowserRouter>
+    </div>
+      </BrowserRouter>
   );
 };
 

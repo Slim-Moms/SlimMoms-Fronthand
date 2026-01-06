@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { simulateCalculateDailyRate } from "../../api/fakeBackend";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -45,8 +46,24 @@ export const fetchDailyRate = createAsyncThunk(
         bloodType: parseInt(userData.bloodType, 10) || 1,
       };
 
-      const response = await axios.post("/user/daily-calory-needs", payload);
-      return response.data.data;
+      const state = thunkAPI.getState();
+      const token = state?.auth?.token;
+      
+      const config = token ? {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      } : {};
+
+      try {
+        const response = await axios.post("/user/daily-calory-needs", payload, config);
+        return response.data.data;
+      } catch (apiError) {
+        if (apiError.response?.status === 401 || !token) {
+          return await simulateCalculateDailyRate(payload);
+        }
+        throw apiError;
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
@@ -82,14 +99,14 @@ export const addDiaryProduct = createAsyncThunk(
         const products = searchResponse.data.data || searchResponse.data || [];
         
         if (!products || products.length === 0) {
-          return thunkAPI.rejectWithValue(`Ürün bulunamadı: "${productData.productName}"`);
+          return thunkAPI.rejectWithValue(`Product not found: "${productData.productName}"`);
         }
 
         foundProduct = products[0];
       }
       
       if (!foundProduct._id) {
-        return thunkAPI.rejectWithValue("Ürün ID'si bulunamadı");
+        return thunkAPI.rejectWithValue("Product ID not found");
       }
 
       const formattedDate = new Date(productData.date).toISOString().split('T')[0];
@@ -117,7 +134,7 @@ export const addDiaryProduct = createAsyncThunk(
       if (error.message) {
         return thunkAPI.rejectWithValue(error.message);
       }
-      return thunkAPI.rejectWithValue("Ürün eklenirken bir hata oluştu");
+      return thunkAPI.rejectWithValue("An error occurred while adding product");
     }
   }
 );
