@@ -2,37 +2,78 @@ import React from "react";
 import "./DailyCalorieIntake.css";
 
 export default function DailyCalorieIntake({ data }) {
-  // Veri yoksa bileşeni render etme
-  if (!data) return null;
+  if (!data || !data.dailyRate) {
+    return (
+      <div className="intake_modal_content">
+        <h2 className="modal_title" style={{ color: "black" }}>
+          Calculations in progress...
+        </h2>
+      </div>
+    );
+  }
 
-  // Dinamik hesaplama: Formdan gelen veriler kullanılıyor
-  const { height, age, currentWeight } = data;
-
-  // Yönerge: Dinamik veri görüntülemeyi gerçekleştir
-  const calories = Math.round(10 * currentWeight + 6.25 * height - 5 * age + 5);
+  const { dailyRate, notAllowedProducts } = data;
 
   return (
     <div className="intake_modal_content">
-      <h2 className="modal_title">Your daily calorie intake should be</h2>
+      <h2
+        className="modal_title"
+        style={{ color: "#212121", marginBottom: "20px" }}
+      >
+        Your daily calorie intake should be
+      </h2>
 
-      <div className="calories_display">
-        <span className="calories_number">{calories}</span>
-        <span className="calories_unit"> kcal</span>
+      <div
+        className="calories_display"
+        style={{ marginBottom: "20px", textAlign: "center" }}
+      >
+        <span
+          className="calories_number"
+          style={{ fontSize: "48px", color: "#264061", fontWeight: "bold" }}
+        >
+          {Math.round(dailyRate)}
+        </span>
+        <span
+          className="calories_unit"
+          style={{ fontSize: "20px", color: "#264061", marginLeft: "5px" }}
+        >
+          kcal
+        </span>
       </div>
 
-      <div className="forbidden_foods">
-        <h3>Foods you should not eat</h3>
-        {/* Görseldeki gibi sıralı liste yapısı */}
-        <ol>
-          <li>Flour products</li>
-          <li>Milk</li>
-          <li>Red meat</li>
-          <li>Smoked meats</li>
+      <div
+        className="forbidden_foods"
+        style={{ borderTop: "1px solid #E0E0E0", paddingTop: "20px" }}
+      >
+        <h3
+          style={{
+            fontSize: "14px",
+            fontWeight: "bold",
+            marginBottom: "15px",
+            textAlign: "left",
+            color: "#212121",
+          }}
+        >
+          Foods you should not eat
+        </h3>
+        <ol style={{ textAlign: "left", paddingLeft: "20px", color: "#666" }}>
+          {notAllowedProducts && notAllowedProducts.length > 0 ? (
+            notAllowedProducts.slice(0, 5).map((product, index) => (
+              <li key={index} style={{ marginBottom: "5px" }}>
+                {product}
+              </li>
+            ))
+          ) : (
+            <li>No specific restrictions.</li>
+          )}
         </ol>
       </div>
 
-      {/* Görseldeki turuncu buton */}
-      <button type="button" className="orange_btn">
+      <button
+        type="button"
+        className="orange_btn"
+        style={{ marginTop: "30px", width: "100%" }}
+      >
         Start losing weight
       </button>
     </div>

@@ -1,0 +1,15 @@
+.diary-products-list {
+  margin-top: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.diary-products-empty {
+  text-align: center;
+  color: #9B9FAA;
+  font-family: 'Verdana', sans-serif;
+  font-size: 14px;
+  padding: 20px;
+}
+

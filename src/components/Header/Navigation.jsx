@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 
 const Navigation = ({ isLoggedIn }) => {
   return (
-    <nav className={styles.nav}>
+    <nav className={`${styles.nav} ${!isLoggedIn ? styles.authNav : ""}`}>
       {isLoggedIn ? (
         <>
           <NavLink
