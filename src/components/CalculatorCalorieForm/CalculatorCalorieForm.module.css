@@ -151,14 +151,16 @@
   
   .container {
     max-width: 768px;
-    padding: 100px 87px 50px;
+    padding: 0;
   }
 
   .title {
     text-align: left;
-    font-size: 30px;
-    line-height: 36px;
-    margin-bottom: 60px;
+    font-size: 34px;
+    line-height: 1.2;
+    margin-bottom: 40px;
+    max-width: 550px;
+    font-weight: 700;
   }
 
   .formContainer {
@@ -168,7 +170,7 @@
 
   .formWrapper {
     display: flex;
-    gap: 30px;
+    gap: 40px;
   }
   
   .inputColumn {
@@ -177,14 +179,14 @@
   }
 
   .button {
-    margin: 60px 0 0 0;
+    margin: 40px 0 0 0;
   }
 }
 
 /* Desktop */
 @media screen and (min-width: 1280px) {
   .container {
-    padding-top: 140px;
+    padding-top: 40px; /* Eski değer: 140px */
     padding-left: 16px; 
     max-width: 1280px;
   }

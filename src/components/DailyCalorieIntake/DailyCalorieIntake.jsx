@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./DailyCalorieIntake.css";
 
 export default function DailyCalorieIntake({ data }) {
+  const navigate = useNavigate();
+
   if (!data || !data.dailyRate) {
     return (
       <div className="intake_modal_content">
@@ -13,6 +16,10 @@ export default function DailyCalorieIntake({ data }) {
   }
 
   const { dailyRate, notAllowedProducts } = data;
+
+  const handleRegisterClick = () => {
+    navigate("/registration");
+  };
 
   return (
     <div className="intake_modal_content">
@@ -73,6 +80,7 @@ export default function DailyCalorieIntake({ data }) {
         type="button"
         className="orange_btn"
         style={{ marginTop: "30px", width: "100%" }}
+        onClick={handleRegisterClick}
       >
         Start losing weight
       </button>

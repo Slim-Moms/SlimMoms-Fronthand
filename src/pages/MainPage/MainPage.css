@@ -21,7 +21,7 @@
 }
 
 .hero-section {
-  padding-top: 150px;
+  padding-top: 40px; 
   max-width: 600px;
 }
 
@@ -45,7 +45,7 @@
   background-image: url('../../img/Group41@1x.png');
   background-repeat: no-repeat;
   background-position: right center; 
-  background-size: 50% auto; 
+  background-size: 60% auto; 
   z-index: 20; 
   pointer-events: none;
 }
@@ -53,22 +53,28 @@
 /* Tablet styles (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .main-page {
-    margin-top: -130px; 
-    padding-top: 130px;
+    margin-top: 0; 
+    padding-top: 0;
+    min-height: 100vh;
   }
 
   .hero-section {
-    padding-top: 100px;
-    max-width: 450px;
-  }
-
-  .hero-title {
-    font-size: 32px;
+    padding-top: 60px; 
+    max-width: 100%;
   }
 
   .main-page::after {
-    background-size: 100% auto;
-    background-position: top right;
+    background-image: url('../../img/Group40@2x.png');
+    background-size: auto 85%;
+    background-position: bottom right;
+    bottom: 0;
+    top: auto;
+    z-index: 1;
+  }
+
+  .container {
+    z-index: 2;
+    padding: 0 32px;
   }
 }
 
@@ -77,22 +83,20 @@
   .main-page {
     margin-top: -130px; 
     padding-top: 130px;
+    background-color: #ffffff;
   }
 
   .hero-section {
-    padding-top: 60px;
-    padding-bottom: 200px;
-  }
-
-  .hero-title {
-    font-size: 18px;
-    max-width: 280px;
+    padding-top: 0; 
+    padding-bottom: 40px;
+    max-width: 100%;
   }
 
   .main-page::after {
-    background-position: center bottom;
-    background-size: 100% auto;
-    opacity: 0.6;
-    z-index: 10;
+    display: none; 
+  }
+
+  .container {
+    padding: 0 20px;
   }
 }

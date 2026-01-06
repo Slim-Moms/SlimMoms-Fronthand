@@ -9,24 +9,6 @@ import { selectIsLoading, selectDailyRate, selectNotAllowedProducts } from "../.
 import "./MainPage.css";
 
 const MainPage = () => {
-  const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [localResult, setLocalResult] = useState(null);
-
-  const isLoading = useSelector(selectIsLoading);
-
-  const handleSubmit = async (values) => {
-    const resultAction = await dispatch(fetchDailyRate(values));
-
-    if (fetchDailyRate.fulfilled.match(resultAction)) {
-      setLocalResult({
-        dailyRate: resultAction.payload.dailyRate,
-        notAllowedProducts: resultAction.payload.notAllowedProducts || []
-      });
-      setIsModalOpen(true);
-    }
-  };
-
   return (
     <main className="main-page">
       {isLoading && <Loader />}
@@ -35,28 +17,8 @@ const MainPage = () => {
           <h1 className="hero-title">
             Calculate your daily calorie intake right now
           </h1>
-          <CalculatorCalorieForm
-            onSubmit={handleSubmit}
-            hideTitle={true}
-            initialValues={{
-              height: "",
-              age: "",
-              weight: "",
-              desiredWeight: "",
-              bloodType: "1",
-            }}
-          />
         </section>
       </div>
-
-      {isModalOpen && localResult && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <DailyCalorieIntake
-            data={localResult}
-            onClose={() => setIsModalOpen(false)}
-          />
-        </Modal>
-      )}
     </main>
   );
 };
