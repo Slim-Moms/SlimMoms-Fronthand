@@ -14,20 +14,22 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        const userData = action.payload.user || action.payload;
+        const payload = action.payload;
+        const userData = payload.user || payload;
         const email = userData.email || "";
         const nameFromEmail = email.split("@")[0];
         state.user = {
           name: userData.name || userData.username || nameFromEmail || "User",
           email: email,
         };
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.token = payload.token || payload.accessToken || null;
+        state.isLoggedIn = !!state.token;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.user || action.payload;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
+        const payload = action.payload;
+        state.user = payload.user || payload;
+        state.token = payload.token || payload.accessToken || null;
+        state.isLoggedIn = !!state.token;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = { name: null, email: null };

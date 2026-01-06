@@ -14,12 +14,15 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/calculator");
+      navigate("/diary");
     }
   }, [isLoggedIn, navigate]);
 
-  const handleLogin = (values) => {
-    dispatch(login(values));
+  const handleLogin = async (values) => {
+    const result = await dispatch(login(values));
+    if (login.fulfilled.match(result)) {
+      navigate("/diary");
+    }
   };
 
   return (

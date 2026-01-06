@@ -3,16 +3,33 @@ import { useSelector } from "react-redux";
 import {
   selectDailyRate,
   selectNotAllowedProducts,
+  selectDiaryProducts,
+  selectSelectedDate,
 } from "../../redux/diet/dietSelectors";
 import styles from "./RightSideBar.module.css";
 
 const RightSideBar = () => {
   const dailyRate = useSelector(selectDailyRate);
   const notAllowedProducts = useSelector(selectNotAllowedProducts);
-  const date = new Date().toLocaleDateString("en-GB");
+  const diaryProducts = useSelector(selectDiaryProducts);
+  const selectedDate = useSelector(selectSelectedDate);
+  
+  const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
 
-  const consumed = 0;
-  const left = dailyRate ? Math.round(dailyRate) - consumed : 0;
+  const date = selectedDate 
+    ? formatDate(new Date(selectedDate))
+    : formatDate(new Date());
+
+  const consumed = diaryProducts.reduce((total, product) => {
+    return total + (product.calories || 0);
+  }, 0);
+
+  const left = dailyRate ? Math.max(0, Math.round(dailyRate) - consumed) : 0;
   const percentage = dailyRate ? Math.round((consumed / dailyRate) * 100) : 0;
 
   return (

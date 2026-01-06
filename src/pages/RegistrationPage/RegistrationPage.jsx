@@ -13,17 +13,20 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/calculator");
+      navigate("/diary");
     }
   }, [isLoggedIn, navigate]);
 
-  const handleRegister = (values) => {
+  const handleRegister = async (values) => {
     const payload = {
       name: values.username || values.name,
       email: values.email,
       password: values.password,
     };
-    dispatch(register(payload));
+    const result = await dispatch(register(payload));
+    if (register.fulfilled.match(result)) {
+      navigate("/diary");
+    }
   };
 
   return (
