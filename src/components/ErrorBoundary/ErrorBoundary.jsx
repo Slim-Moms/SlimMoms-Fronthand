@@ -1,4 +1,3 @@
-// ErrorBoundary.jsx
 import React from 'react';
 
 class ErrorBoundary extends React.Component {
@@ -12,27 +11,24 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('🔥 React Hatası:', error);
-    console.error('📋 Component Stack:', errorInfo.componentStack);
+    console.error('React Error:', error);
+    console.error('Component Stack:', errorInfo.componentStack);
     this.setState({ error, errorInfo });
-    
-    // Sentry/LogRocket gibi servislere gönder
-    // logErrorToService(error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
         <div style={{ padding: '20px', border: '2px solid red' }}>
-          <h2>❌ Bir şeyler yanlış gitti!</h2>
+          <h2>Something went wrong!</h2>
           <details style={{ whiteSpace: 'pre-wrap' }}>
-            <summary>Hata Detayları</summary>
+            <summary>Error Details</summary>
             {this.state.error && this.state.error.toString()}
             <br />
             {this.state.errorInfo.componentStack}
           </details>
           <button onClick={() => window.location.reload()}>
-            Sayfayı Yenile
+            Reload Page
           </button>
         </div>
       );
@@ -41,11 +37,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// Kullanımı:
-function App() {
-  return (
-    <ErrorBoundary>
-      <YourComponent />
-    </ErrorBoundary>
-  );
-}
+export default ErrorBoundary;

@@ -109,7 +109,11 @@ export const addDiaryProduct = createAsyncThunk(
         return thunkAPI.rejectWithValue("Product ID not found");
       }
 
-      const formattedDate = new Date(productData.date).toISOString().split('T')[0];
+      const dateObj = new Date(productData.date);
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
 
       const addResponse = await axios.post("/user/products", {
         productId: foundProduct._id,
@@ -152,7 +156,11 @@ export const deleteDiaryProduct = createAsyncThunk(
         }
       } : {};
 
-      const formattedDate = new Date(date).toISOString().split('T')[0];
+      const dateObj = new Date(date);
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
       await axios.delete(`/user/products/${productId}?date=${formattedDate}`, authConfig);
       return productId;
     } catch (error) {
@@ -176,7 +184,10 @@ export const fetchDiaryProductsByDate = createAsyncThunk(
         }
       } : {};
 
-      const formattedDate = date.toISOString().split('T')[0];
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
       const response = await axios.get(`/user/products?date=${formattedDate}`, authConfig);
       
       if (!response.data.products || response.data.products.length === 0) {

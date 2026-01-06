@@ -31,7 +31,10 @@ const DiaryDateCalendar = () => {
 
   const onChange = (newValue) => {
     setValue(newValue);
-    const dateString = newValue.toISOString().split('T')[0];
+    const year = newValue.getFullYear();
+    const month = String(newValue.getMonth() + 1).padStart(2, '0');
+    const day = String(newValue.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${day}`;
     dispatch(setSelectedDate(dateString));
     dispatch(fetchDiaryProductsByDate(newValue));
     setIsOpen(false);
