@@ -74,7 +74,7 @@ const DiaryAddProductForm = () => {
     setError('');
     
     if (!productName.trim() || !weight.trim()) {
-      setError('Lütfen ürün adı ve gram bilgisi girin');
+      setError('Please enter product name and grams');
       return;
     }
 
@@ -100,7 +100,7 @@ const DiaryAddProductForm = () => {
       setSuggestions([]);
       setShowSuggestions(false);
     } catch (error) {
-      const errorMessage = typeof error === 'string' ? error : error.message || 'Ürün eklenirken bir hata oluştu';
+      const errorMessage = typeof error === 'string' ? error : error.message || 'An error occurred while adding product';
       setError(errorMessage);
     }
   };

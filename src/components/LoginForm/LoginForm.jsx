@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import s from './LoginForm.module.css'; // Stil dosyası varsayımıyla
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Geçersiz e-posta').required('Zorunlu alan'),
-  password: Yup.string().required('Zorunlu alan'),
+  email: Yup.string().email('Invalid email').required('Required field'),
+  password: Yup.string().required('Required field'),
 });
 
 const LoginForm = ({ onSubmit }) => {
   return (
     <div className={s.formContainer}>
-      <h2 className={s.title}>GİRİŞ YAP</h2>
+      <h2 className={s.title}>LOGIN</h2>
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={LoginSchema}
@@ -21,21 +21,21 @@ const LoginForm = ({ onSubmit }) => {
         {({ isSubmitting }) => (
           <Form className={s.form}>
             <div className={s.inputWrapper}>
-              <Field type="email" name="email" placeholder="E-posta *" className={s.input} />
+              <Field type="email" name="email" placeholder="Email *" className={s.input} />
               <ErrorMessage name="email" component="div" className={s.error} />
             </div>
 
             <div className={s.inputWrapper}>
-              <Field type="password" name="password" placeholder="Şifre *" className={s.input} />
+              <Field type="password" name="password" placeholder="Password *" className={s.input} />
               <ErrorMessage name="password" component="div" className={s.error} />
             </div>
 
             <div className={s.buttonGroup}>
               <button type="submit" disabled={isSubmitting} className={s.mainBtn}>
-                Giriş Yap
+                Login
               </button>
               <Link to="/registration" className={s.secondaryBtn}>
-                Kayıt Ol
+                Register
               </Link>
             </div>
           </Form>
