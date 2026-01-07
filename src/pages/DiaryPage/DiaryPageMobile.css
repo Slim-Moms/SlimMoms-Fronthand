@@ -1,0 +1,48 @@
+.diary-form-inline {
+  display: block;
+}
+
+.diary-mobile-add-btn {
+  display: none;
+}
+
+.diary-mobile-form-container {
+  display: none;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .diary-form-inline {
+    display: none;
+  }
+
+  .diary-mobile-add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #FC842D;
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
+    cursor: pointer;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .diary-mobile-form-container {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .diary-mobile-form-open .diary-date-calendar,
+  .diary-mobile-form-open .diary-products-list,
+  .diary-mobile-form-open .diary-mobile-add-btn {
+    display: none;
+  }
+}
+

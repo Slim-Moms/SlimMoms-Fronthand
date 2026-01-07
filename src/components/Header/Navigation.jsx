@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 
-const Navigation = ({ isLoggedIn }) => {
+const Navigation = ({ isLoggedIn, onLinkClick }) => {
   return (
     <nav className={`${styles.nav} ${!isLoggedIn ? styles.authNav : ""}`}>
       {isLoggedIn ? (
@@ -9,6 +9,7 @@ const Navigation = ({ isLoggedIn }) => {
           <NavLink
             to='/diary'
             className={({ isActive }) => (isActive ? styles.active : styles.link)}
+            onClick={onLinkClick}
           >
             DIARY
           </NavLink>
@@ -16,6 +17,7 @@ const Navigation = ({ isLoggedIn }) => {
           <NavLink
             to='/calculator'
             className={({ isActive }) => (isActive ? styles.active : styles.link)}
+            onClick={onLinkClick}
           >
             CALCULATOR
           </NavLink>
@@ -25,6 +27,7 @@ const Navigation = ({ isLoggedIn }) => {
           <NavLink
             to='/login'
             className={({ isActive }) => (isActive ? styles.active : styles.link)}
+            onClick={onLinkClick}
           >
             LOG IN
           </NavLink>
@@ -32,6 +35,7 @@ const Navigation = ({ isLoggedIn }) => {
           <NavLink
             to='/registration'
             className={({ isActive }) => (isActive ? styles.active : styles.link)}
+            onClick={onLinkClick}
           >
             REGISTRATION
           </NavLink>

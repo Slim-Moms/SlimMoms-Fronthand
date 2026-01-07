@@ -122,7 +122,23 @@
   
   .button {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 60px;
+  }
+  
+  .radioWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .radioLabel {
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .radioGroup {
+    margin-top: 10px;
   }
 }
 
@@ -255,6 +271,7 @@
   padding: 13px 0;
   display: block;
   margin: 0 auto;
+  margin-top: 60px;
   width: 176px;
   border: 2px solid #fc842d;
   border-radius: 30px;
@@ -328,6 +345,17 @@
     flex: 1;
     max-width: 240px;
     margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formRow .radioWrapper .radioLabel {
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .formRow .radioWrapper .radioGroup {
+    margin-top: 10px;
   }
   
   .formRow:last-child .formInput {
@@ -394,8 +422,8 @@
   
   .button {
     margin-top: 60px;
-    margin-left: 0;
+    margin-left: auto;
     margin-right: 0;
-    align-self: flex-start;
+    align-self: flex-end;
   }
 }

@@ -27,6 +27,22 @@ html, body {
   overflow: hidden;
 }
 
+/* Mobile and Tablet: 100vh with scroll enabled */
+@media screen and (min-width: 320px) and (max-width: 1279px) {
+  .App {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .App.auth-page,
+  .App.main-page-bg {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
 /* Auth pages background (Login, Register) */
 .App.auth-page {
   background-size: 100% 100%;

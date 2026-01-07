@@ -9,6 +9,14 @@
   padding-top: 160px;
 }
 
+/* Mobile and Tablet: enable scroll */
+@media screen and (min-width: 320px) and (max-width: 1279px) {
+  .main-page {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
 .container {
   position: relative;
   width: 100%;

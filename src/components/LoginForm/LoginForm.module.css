@@ -62,6 +62,14 @@
   margin-top: 20px;
 }
 
+/* Mobile: 320px - 767px */
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .formContainer {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 /* Common Button Styles */
 .mainBtn, .secondaryBtn {
   width: 100%;

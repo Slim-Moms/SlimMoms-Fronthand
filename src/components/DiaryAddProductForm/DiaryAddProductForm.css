@@ -71,6 +71,28 @@
   transform: scale(1.05);
 }
 
+.diary-add-button-add {
+  padding: 13px 25px;
+  border-radius: 30px;
+  background-color: #FC842D;
+  border: 2px solid #FC842D;
+  color: #FFFFFF;
+  font-family: 'Verdana', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
+}
+
+.diary-add-button-add:hover {
+  background-color: #FFFFFF;
+  color: #FC842D;
+  box-shadow: 0px 4px 15px rgba(252, 132, 45, 0.5);
+}
+
 .diary-error-message {
   margin-top: 10px;
   color: #ff0000;

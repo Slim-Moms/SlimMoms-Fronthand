@@ -71,12 +71,11 @@
     display: flex;
     flex-direction: row;
     padding: 80px;
-    
-    /* IMAGE SETTINGS */
-    background-image: url('../../img/leavesRotate@1x.png'); 
+    background-image: url('../../img/leavesRotate@1x.png');
     background-repeat: no-repeat;
     background-position: top 45% left 399px;
     background-size: auto;
+    justify-content: space-between;
   }
 
   .summarySection {
@@ -95,21 +94,17 @@
   .container {
     display: flex;
     flex-direction: column;
-    padding: 240px 100px 100px 100px;
-    
-    /* IMAGE SETTINGS */
     background-color: #F0F1F3; 
     background-image: url('../../img/rightSideBar@2x.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center right; 
-    
     height: 100vh;
     width: 100%;
   }
   
   .summarySection {
     margin-right: 0;
-    margin-bottom: 60px;
+    margin-bottom: 79px;
   }
 }

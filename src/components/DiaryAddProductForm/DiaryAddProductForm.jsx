@@ -5,7 +5,7 @@ import { fetchDiaryProductsByDate } from '../../redux/diet/dietOperations';
 import { selectSelectedDate } from '../../redux/diet/dietSelectors';
 import './DiaryAddProductForm.css';
 
-const DiaryAddProductForm = () => {
+const DiaryAddProductForm = ({ onSubmitSuccess, isMobile = false }) => {
   const dispatch = useDispatch();
   const selectedDate = useSelector(selectSelectedDate);
   const [productName, setProductName] = useState('');
@@ -98,6 +98,9 @@ const DiaryAddProductForm = () => {
       setSelectedProduct(null);
       setSuggestions([]);
       setShowSuggestions(false);
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } catch (error) {
       const errorMessage = typeof error === 'string' ? error : error.message || 'An error occurred while adding product';
       setError(errorMessage);
@@ -154,8 +157,8 @@ const DiaryAddProductForm = () => {
                   step="1"
                 />
               </div>
-              <button type="submit" className="diary-add-button-plus">
-                +
+              <button type="submit" className={isMobile ? "diary-add-button-add" : "diary-add-button-plus"}>
+                {isMobile ? "Add" : "+"}
               </button>
             </div>
           </div>
