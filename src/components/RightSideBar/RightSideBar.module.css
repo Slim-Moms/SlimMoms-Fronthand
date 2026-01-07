@@ -59,22 +59,26 @@
 }
 
 /* Mobile */
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .container {
     padding: 20px;
+    background-image: url('../../img/sidebar-mobil.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
   }
 }
 
-/* --- TABLET VIEW (Leaves Coming) --- */
+/* --- TABLET VIEW --- */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .container {
     display: flex;
     flex-direction: row;
     padding: 80px;
-    background-image: url('../../img/leavesRotate@1x.png');
+    background-image: url('../../img/sidebar-mobil.png');
     background-repeat: no-repeat;
-    background-position: top 45% left 399px;
-    background-size: auto;
+    background-size: 100% 100%;
+    background-position: center;
     justify-content: space-between;
   }
 
@@ -95,12 +99,13 @@
     display: flex;
     flex-direction: column;
     background-color: #F0F1F3; 
-    background-image: url('../../img/rightSideBar@2x.png');
+    background-image: url('../../img/sidebar.png');
     background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center right; 
+    background-size: 100% 100%;
+    background-position: center;
     height: 100vh;
     width: 100%;
+    justify-content: center;
   }
   
   .summarySection {
